@@ -1,7 +1,8 @@
-package dao;
+package com.example.project.dao;
 
 
-import pojo.AirlineCompany;
+import com.example.project.pojo.AirlineCompany;
+
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,10 +20,10 @@ public class AirlineCompanyDAO implements DAO {
     List<AirlineCompany> airlineList = new ArrayList<>();
     //Get the airline company by id from DB.
     @Override
-    public Object get(int id) {
+    public AirlineCompany get(int id) {
         AirlineCompany airlineCompany = null;
         try {
-            ResultSet result = cs.statement.executeQuery("select * from Airline_Companies where Airline_Company_Id =" + id);
+            ResultSet result = cs.getStatement().executeQuery("select * from Airline_Companies where Airline_Company_Id =" + id);
             result.next();
             airlineCompany = new AirlineCompany(result.getLong("Airline_Company_Id"),
                     result.getString("Airline_Company_Name"),
@@ -40,7 +41,7 @@ public class AirlineCompanyDAO implements DAO {
     @Override
     public List<AirlineCompany> getAll() {
         try {
-            ResultSet result = cs.statement.executeQuery("select * from Airline_Companies");
+            ResultSet result = cs.getStatement().executeQuery("select * from Airline_Companies");
             while (result.next()) {
                 airlineList.add(new AirlineCompany(result.getLong("Airline_Company_Id"),
                         result.getString("Airline_Company_Name"),
@@ -59,7 +60,7 @@ public class AirlineCompanyDAO implements DAO {
     public void add(Object o) {
         if (o instanceof AirlineCompany airlineCompany) {
             try {
-                cs.statement.executeUpdate("insert into Airline_Companies(Airline_Company_Name,country_Id,user_Id)" +
+                cs.getStatement().executeUpdate("insert into Airline_Companies(Airline_Company_Name,country_Id,user_Id)" +
                         "values" + "('" + airlineCompany.airlineCompanyName + "'," + airlineCompany.countryId + "," +
                         airlineCompany.userId + ")");
                 cs.closeCS();
@@ -73,7 +74,7 @@ public class AirlineCompanyDAO implements DAO {
     public void remove(Object o) {
         if (o instanceof AirlineCompany airlineCompany) {
             try {
-                cs.statement.executeUpdate("delete from Airline_Companies where Airline_Company_Id =" +
+                cs.getStatement().executeUpdate("delete from Airline_Companies where Airline_Company_Id =" +
                         airlineCompany.airlineCompanyId);
 
                 cs.closeCS();
@@ -87,7 +88,7 @@ public class AirlineCompanyDAO implements DAO {
     public void update(Object o) {
         if (o instanceof AirlineCompany airlineCompany) {
             try {
-                cs.statement.executeUpdate("update Airline_Companies set Airline_Company_Name ='" +
+                cs.getStatement().executeUpdate("update Airline_Companies set Airline_Company_Name ='" +
                         airlineCompany.airlineCompanyName + "'," + "Country_Id =" + airlineCompany.countryId +
                         "," + "User_Id=" + airlineCompany.userId + "where Airline_Company_Id = " +
                         airlineCompany.airlineCompanyId);
@@ -103,7 +104,7 @@ public class AirlineCompanyDAO implements DAO {
     public List<AirlineCompany> getAirlinesByCountry(int country_id) {
         List<AirlineCompany> airlineCountries = new ArrayList<>();
         try {
-            ResultSet result = cs.statement.executeQuery("select * from Airline_Companies where country_id=" + country_id);
+            ResultSet result = cs.getStatement().executeQuery("select * from Airline_Companies where country_id=" + country_id);
             while (result.next()) {
                 airlineCountries.add(new AirlineCompany(result.getLong("Airline_Company_Id"),
                         result.getString("Airline_Company_Name"),
@@ -121,7 +122,7 @@ public class AirlineCompanyDAO implements DAO {
     public AirlineCompany getAirlineByUsername(String username) {
         AirlineCompany airlineCompany = null;
         try {
-            ResultSet result = cs.statement.executeQuery("select * from get_airline_by_username" + "('" + username + "')");
+            ResultSet result = cs.getStatement().executeQuery("select * from get_airline_by_username" + "('" + username + "')");
             while (result.next()) {
                 airlineCompany = (new AirlineCompany(result.getLong("Airline_Company_Id"),
                         result.getString("Airline_Company_Name"),

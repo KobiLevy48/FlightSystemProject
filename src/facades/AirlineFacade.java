@@ -1,9 +1,11 @@
-package facades;
+package com.example.project.facades;
 
-import pojo.AirlineCompany;
-import pojo.Flight;
-import token.LoginToken;
-import org.jetbrains.annotations.NotNull;
+import com.example.project.pojo.AirlineCompany;
+import com.example.project.pojo.Flight;
+import com.example.project.token.LoginToken;
+import com.sun.istack.NotNull;
+
+
 
 import java.util.List;
 

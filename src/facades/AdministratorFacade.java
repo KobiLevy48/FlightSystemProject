@@ -1,9 +1,10 @@
-package facades;
+package com.example.project.facades;
 
-import pojo.Administrator;
-import pojo.AirlineCompany;
-import pojo.Customer;
-import token.LoginToken;
+import com.example.project.pojo.Administrator;
+import com.example.project.pojo.AirlineCompany;
+import com.example.project.pojo.Customer;
+import com.example.project.token.LoginToken;
+
 
 import java.util.List;
 
@@ -13,7 +14,6 @@ public class AdministratorFacade extends AnonymousFacade {
     public AdministratorFacade(LoginToken loginToken) {
         this.loginToken = loginToken;
     }
-
     public List<Customer> getAllCustomers() {
         return customerDAO.getAll();
     }
@@ -36,5 +36,8 @@ public class AdministratorFacade extends AnonymousFacade {
 
     public void removeAdministrator(Administrator administrator) {
         administratorDAO.remove(administrator);
+    }
+    public List<Administrator> getAllAdministrators(){
+        return administratorDAO.getAll();
     }
 }

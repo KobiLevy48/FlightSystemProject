@@ -1,4 +1,4 @@
-package dao;
+package com.example.project.dao;
 
 import java.sql.*;
 /*
@@ -7,10 +7,10 @@ This is a class for opening connection
  function to close ResultSet if null.
  */
 public class Connection_Statement {
-    //Statement
-    public Statement statement;
     //Connection
-    public Connection connection;
+    private Connection connection;
+    //Statement
+    private Statement statement;
     //constructor opening connection & statement.
     public Connection_Statement() {
         try {
@@ -21,6 +21,11 @@ public class Connection_Statement {
             e.printStackTrace();
         }
     }
+
+    public Statement getStatement() {
+        return statement;
+    }
+
     //close connection & statement.
     public void closeCS() {
         try {

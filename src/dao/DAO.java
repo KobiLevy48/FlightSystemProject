@@ -1,4 +1,4 @@
-package dao;
+package com.example.project.dao;
 
 import java.util.List;
 //Interface for CRUD functions.

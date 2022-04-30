@@ -1,6 +1,7 @@
-package dao;
+package com.example.project.dao;
 
-import pojo.Administrator;
+import com.example.project.pojo.Administrator;
+
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,7 +23,7 @@ public class AdministratorDAO implements DAO {
         Administrator administrator = null;
 
         try {
-            ResultSet result = cs.statement.executeQuery("select * from administrators where Administrator_Id=" + id);
+            ResultSet result = cs.getStatement().executeQuery("select * from administrators where Administrator_Id=" + id);
             result.next();
             administrator = new Administrator(result.getInt("administrator_Id"),
                     result.getString("first_Name"),
@@ -39,7 +40,7 @@ public class AdministratorDAO implements DAO {
     @Override
     public List<Administrator> getAll() {
         try {
-            ResultSet result = cs.statement.executeQuery("select * from Administrators");
+            ResultSet result = cs.getStatement().executeQuery("select * from Administrators");
             while (result.next()) {
                 administratorsList.add(new Administrator(result.getInt("administrator_Id"),
                         result.getString("first_Name"),
@@ -57,7 +58,7 @@ public class AdministratorDAO implements DAO {
     public void add(Object o) {
         if (o instanceof Administrator administrator) {
             try {
-                cs.statement.executeUpdate("insert into Administrators (First_Name,Last_Name,User_Id )" +
+                cs.getStatement().executeUpdate("insert into Administrators (First_Name,Last_Name,User_Id )" +
                         "values" + "('" + administrator.firstName + "','" + administrator.lastName + "'," + administrator.userId + ")");
                 cs.closeCS();
             } catch (SQLException e) {
@@ -71,7 +72,7 @@ public class AdministratorDAO implements DAO {
     public void remove(Object o) {
         if (o instanceof Administrator administrator) {
             try {
-                cs.statement.executeUpdate("delete from Administrators where administrator_Id = " + administrator.administratorId);
+                cs.getStatement().executeUpdate("delete from Administrators where administrator_Id = " + administrator.administratorId);
                 //cs.closeCS();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -84,7 +85,7 @@ public class AdministratorDAO implements DAO {
     public void update(Object o) {
         if (o instanceof Administrator administrator) {
             try {
-                cs.statement.executeUpdate("update Administrators set First_Name= '" + administrator.firstName +
+                cs.getStatement().executeUpdate("update Administrators set First_Name= '" + administrator.firstName +
                         "'" + ", Last_Name= '" + administrator.lastName + "'" + ",User_Id=" +
                         administrator.userId + "where Administrator_Id=" + administrator.administratorId);
                 cs.closeCS();
@@ -100,7 +101,7 @@ public class AdministratorDAO implements DAO {
         Administrator administrator = null;
         try {
 
-            ResultSet result = cs.statement.executeQuery("select * from get_administrator_by_username('"+ username+"')");
+            ResultSet result = cs.getStatement().executeQuery("select * from get_administrator_by_username('"+ username+"')");
             result.next();
             administrator = new Administrator(result.getInt("administrator_Id"),
                     result.getString("first_Name"),

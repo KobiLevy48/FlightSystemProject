@@ -1,12 +1,15 @@
-package facades;
+package com.example.project.facades;
 
-import pojo.Customer;
-import pojo.User;
-import token.LoginToken;
+import com.example.project.pojo.Customer;
+import com.example.project.pojo.User;
+import com.example.project.token.LoginToken;
+import org.springframework.stereotype.Component;
+
 /*
 All the users (admin, airline,customer) have to past
 function class -login- to enter the application.
  */
+@Component
 public class AnonymousFacade extends FacadeBase {
     //@param username and password. and return object -> facade / String
     public Object login(String username, String password) {

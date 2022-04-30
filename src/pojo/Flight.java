@@ -1,4 +1,4 @@
-package pojo;
+package com.example.project.pojo;
 
 import java.sql.Timestamp;
 

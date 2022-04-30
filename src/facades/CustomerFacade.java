@@ -1,10 +1,13 @@
-package facades;
+package com.example.project.facades;
 
-import pojo.Customer;
-import pojo.Flight;
-import pojo.Ticket;
-import token.LoginToken;
-import org.jetbrains.annotations.NotNull;
+
+import com.example.project.pojo.Customer;
+import com.example.project.pojo.Flight;
+import com.example.project.pojo.Ticket;
+import com.example.project.token.LoginToken;
+import com.sun.istack.NotNull;
+
+
 
 import java.util.List;
 
@@ -47,6 +50,7 @@ public class CustomerFacade extends AnonymousFacade {
     public List<Ticket> getMyTickets() {
         return ticketDAO.getTicketsByCustomer(loginToken.getId());
     }
+
 
     private boolean checkToken(long id) {
         return id == loginToken.getId();

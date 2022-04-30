@@ -1,4 +1,4 @@
-package pojo;
+package com.example.project.pojo;
 
 public class Customer implements POJO{
     public long customerId;

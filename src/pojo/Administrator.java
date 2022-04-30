@@ -1,4 +1,4 @@
-package pojo;
+package com.example.project.pojo;
 
 public class Administrator implements POJO{
     public int administratorId;

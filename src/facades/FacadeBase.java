@@ -1,12 +1,9 @@
-package facades;
+package com.example.project.facades;
 
-import dao.*;
-
-import pojo.AirlineCompany;
-import pojo.Country;
-import pojo.Flight;
-import pojo.User;
-import org.jetbrains.annotations.NotNull;
+import com.example.project.dao.*;
+import com.example.project.pojo.*;
+import com.sun.istack.NotNull;
+import org.springframework.stereotype.Component;
 
 
 import java.sql.Timestamp;
@@ -27,7 +24,7 @@ public abstract class FacadeBase {
         return flightDAO.getAll();
     }
 
-    public Object getFlightById(int id) {
+    public Flight getFlightById(int id) {
         return flightDAO.get(id);
     }
 
@@ -39,11 +36,11 @@ public abstract class FacadeBase {
         return airlineCompanyDAO.getAll();
     }
 
-    public Object getAirlineById(int id) {
+    public AirlineCompany getAirlineById(int id) {
         return airlineCompanyDAO.get(id);
     }
 
-    public List<AirlineCompany> getAirlineByParameters(int country_id) {
+    public List<AirlineCompany> getAirlineByParameter(int country_id) {
         return airlineCompanyDAO.getAirlinesByCountry(country_id);
     }
 
@@ -51,7 +48,7 @@ public abstract class FacadeBase {
         return countryDAO.getAll();
     }
 
-    public Object getCountryById(int id) {
+    public Country getCountryById(int id) {
         return countryDAO.get(id);
     }
 

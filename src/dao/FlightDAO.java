@@ -1,8 +1,9 @@
-package dao;
+package com.example.project.dao;
 
-import org.jetbrains.annotations.NotNull;
-import pojo.Customer;
-import pojo.Flight;
+import com.example.project.pojo.Customer;
+import com.example.project.pojo.Flight;
+import com.sun.istack.NotNull;
+
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,10 +23,10 @@ public class FlightDAO implements DAO {
     List<Flight> flightList = new ArrayList<>();
     //Get flight by id from DB.
     @Override
-    public Object get(int id) {
+    public Flight get(int id) {
         Flight flight = null;
         try {
-            ResultSet result = cs.statement.executeQuery("select * from Flights where Flight_Id = " + id);
+            ResultSet result = cs.getStatement().executeQuery("select * from Flights where Flight_Id = " + id);
             result.next();
             flight = new Flight(result.getLong("Flight_Id"),
                     result.getLong("Airline_Company_Id"),
@@ -45,7 +46,7 @@ public class FlightDAO implements DAO {
     @Override
     public List<Flight> getAll() {
         try {
-            ResultSet result = cs.statement.executeQuery("select * from Flights");
+            ResultSet result = cs.getStatement().executeQuery("select * from Flights");
             while (result.next()) {
                 flightList.add(new Flight(result.getLong("Flight_Id"),
                         result.getLong("Airline_Company_Id"),
@@ -67,7 +68,7 @@ public class FlightDAO implements DAO {
     public void add(Object o) {
         if (o instanceof Flight flight) {
             try {
-                cs.statement.executeUpdate("insert into Flights" +
+                cs.getStatement().executeUpdate("insert into Flights" +
                         "(Airline_Company_Id,Origin_Country_Id,Destination_Country_Id,Departure_Time,Landing_Time,Remaining_Tickets)" +
                         "values" + "(" + flight.airlineCompanyId + "," + flight.originCountryId + "," + flight.destinationCountryId
                         + ",'" + flight.departureTime + "','" + flight.landingTime + "'," +
@@ -84,7 +85,7 @@ public class FlightDAO implements DAO {
     public void remove(Object o) {
         if (o instanceof Flight flight) {
             try {
-                cs.statement.executeUpdate("delete from Flights where Flight_Id =" +
+                cs.getStatement().executeUpdate("delete from Flights where Flight_Id =" +
                         flight.flightId);
                 cs.closeCS();
             } catch (SQLException e) {
@@ -97,7 +98,7 @@ public class FlightDAO implements DAO {
     public void update(Object o) {
         if (o instanceof Flight flight) {
             try {
-                cs.statement.executeUpdate("update Flights set Airline_Company_Id ='" + flight.airlineCompanyId + "'," +
+                cs.getStatement().executeUpdate("update Flights set Airline_Company_Id ='" + flight.airlineCompanyId + "'," +
                         "Origin_Country_Id='" + flight.originCountryId + "'," + "Destination_Country_Id='" + flight.destinationCountryId + "'," +
                         "Departure_Time='" + flight.departureTime + "'," + "Landing_Time='" + flight.landingTime +
                         "'," + "Remaining_Tickets=" + flight.remainingTickets + "where Flight_Id = " + flight.flightId
@@ -113,7 +114,7 @@ public class FlightDAO implements DAO {
     public List<Flight> getFlightsByOriginCountryId(int country_id) {
         List<Flight> flightsByOriginCountryId = new ArrayList<>();
         try {
-            ResultSet result = cs.statement.executeQuery("select * from Flights where Origin_Country_Id =" + country_id);
+            ResultSet result = cs.getStatement().executeQuery("select * from Flights where Origin_Country_Id =" + country_id);
             while (result.next()) {
                 flightsByOriginCountryId.add(new Flight(result.getLong("Flight_Id"),
                         result.getLong("Airline_Company_Id"),
@@ -134,7 +135,7 @@ public class FlightDAO implements DAO {
     public List<Flight> getFlightsByDestinationCountryId(int country_id) {
         List<Flight> flightsByDestinationCountryId = new ArrayList<>();
         try {
-            ResultSet result = cs.statement.executeQuery("select * from Flights where Destination_Country_Id =" + country_id);
+            ResultSet result = cs.getStatement().executeQuery("select * from Flights where Destination_Country_Id =" + country_id);
             while (result.next()) {
                 flightsByDestinationCountryId.add(new Flight(result.getLong("Flight_Id"),
                         result.getLong("Airline_Company_Id"),
@@ -155,7 +156,7 @@ public class FlightDAO implements DAO {
     public List<Flight> getFlightsByDepartureDate(LocalDate date) {
         List<Flight> flightsByDepartureDate = new ArrayList<>();
         try {
-            ResultSet result = cs.statement.executeQuery("select * from Flights where Departure_Time ::Date =" + "'" + date + "'");
+            ResultSet result = cs.getStatement().executeQuery("select * from Flights where Departure_Time ::Date =" + "'" + date + "'");
             while (result.next()) {
                 flightsByDepartureDate.add(new Flight(result.getLong("Flight_Id"),
                         result.getLong("Airline_Company_Id"),
@@ -179,7 +180,7 @@ public class FlightDAO implements DAO {
 
         List<Flight> flightsByLandingDate = new ArrayList<>();
         try {
-            ResultSet result = cs.statement.executeQuery("select * from Flights where Landing_Time ::Date =" + "'" + date + "'");
+            ResultSet result = cs.getStatement().executeQuery("select * from Flights where Landing_Time ::Date =" + "'" + date + "'");
             while (result.next()) {
                 flightsByLandingDate.add(new Flight(result.getLong("Flight_Id"),
                         result.getLong("Airline_Company_Id"),
@@ -200,7 +201,7 @@ public class FlightDAO implements DAO {
     public List<Flight> getFlightsByCustomer(@NotNull Customer customer) {
         List<Flight> FlightsByCustomer = new ArrayList<>();
         try {
-            ResultSet result = cs.statement.executeQuery("select flight_id,airline_company_id,origin_country_id," +
+            ResultSet result = cs.getStatement().executeQuery("select flight_id,airline_company_id,origin_country_id," +
                     "destination_country_id,departure_time,landing_time,remaining_tickets " +
                     "from get_tickets_by_customer(" +
                     customer.customerId + ")join flights on \"Flight_Id\" =" + "Flights.Flight_Id");
@@ -225,7 +226,7 @@ public class FlightDAO implements DAO {
     public List<Flight> getFlightsByParameters(int origin_country_id, int destination_country_id, Timestamp date) {
         List<Flight> get_flights_by_parameters = new ArrayList<>();
         try {
-            ResultSet result = cs.statement.executeQuery("select * from get_flights_by_parameters(" +
+            ResultSet result = cs.getStatement().executeQuery("select * from get_flights_by_parameters(" +
                     origin_country_id + "," + destination_country_id + "," + "'" + date + "')");
             while (result.next()) {
                 get_flights_by_parameters.add(new Flight(result.getLong("Flight_Id"),
@@ -246,7 +247,7 @@ public class FlightDAO implements DAO {
     public List<Flight> getFlightsByAirlineId(long airline_id) {
         List<Flight> get_flights_by_airline_id = new ArrayList<>();
         try {
-            ResultSet result = cs.statement.executeQuery("select * from get_flights_by_airline_id(" + airline_id + ")");
+            ResultSet result = cs.getStatement().executeQuery("select * from get_flights_by_airline_id(" + airline_id + ")");
             while (result.next()) {
                 get_flights_by_airline_id.add(new Flight(result.getLong("Flight_Id"),
                         result.getLong("Airline_Company_Id"),
@@ -267,7 +268,7 @@ public class FlightDAO implements DAO {
     public List<Flight> getArrivalFlights(int country_id) {
         List<Flight> get_arrival_flights = new ArrayList<>();
         try {
-            ResultSet result = cs.statement.executeQuery("select * from get_arrival_flights(" + country_id + ")");
+            ResultSet result = cs.getStatement().executeQuery("select * from get_arrival_flights(" + country_id + ")");
             while (result.next()) {
                 get_arrival_flights.add(new Flight(result.getLong("Flight_Id"),
                         result.getLong("Airline_Company_Id"),
@@ -288,7 +289,7 @@ public class FlightDAO implements DAO {
     public List<Flight> getDepartureFlights(int country_id) {
         List<Flight> get_departure_flights = new ArrayList<>();
         try {
-            ResultSet result = cs.statement.executeQuery("select * from get_departure_flights(" + country_id + ")");
+            ResultSet result = cs.getStatement().executeQuery("select * from get_departure_flights(" + country_id + ")");
             while (result.next()) {
                 get_departure_flights.add(new Flight(result.getLong("Flight_Id"),
                         result.getLong("Airline_Company_Id"),

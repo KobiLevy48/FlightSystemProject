@@ -1,4 +1,4 @@
-package pojo;
+package com.example.project.pojo;
 
 public class Country implements POJO{
     public int countryId;

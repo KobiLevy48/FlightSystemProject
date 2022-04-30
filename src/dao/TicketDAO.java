@@ -1,6 +1,7 @@
-package dao;
+package com.example.project.dao;
 
-import pojo.Ticket;
+import com.example.project.pojo.Ticket;
+
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,10 +18,10 @@ public class TicketDAO implements DAO {
     List<Ticket> ticketList = new ArrayList<>();
     //Get ticket by id from DB.
     @Override
-    public Object get(int id) {
+    public Ticket get(int id) {
         Ticket ticket = null;
         try {
-            ResultSet result = cs.statement.executeQuery("select * from Tickets where Ticket_Id=" + id);
+            ResultSet result = cs.getStatement().executeQuery("select * from Tickets where Ticket_Id=" + id);
             result.next();
             ticket = new Ticket(result.getLong("Ticket_Id"),
                     result.getLong("Flight_Id"),
@@ -36,7 +37,7 @@ public class TicketDAO implements DAO {
     @Override
     public List<Ticket> getAll() {
         try {
-            ResultSet result = cs.statement.executeQuery("select * from Tickets");
+            ResultSet result = cs.getStatement().executeQuery("select * from Tickets");
             while (result.next()) {
                 ticketList.add(new Ticket(result.getLong("Ticket_Id"),
                         result.getLong("Flight_Id"),
@@ -54,7 +55,7 @@ public class TicketDAO implements DAO {
     public void add(Object o) {
         if (o instanceof Ticket ticket) {
             try {
-                cs.statement.executeUpdate("insert into Tickets(Flight_Id,Customer_Id)" +
+                cs.getStatement().executeUpdate("insert into Tickets(Flight_Id,Customer_Id)" +
                         "values" + "(" + ticket.flightId + "," + ticket.customerId + ")");
                 cs.closeCS();
             } catch (SQLException e) {
@@ -67,7 +68,7 @@ public class TicketDAO implements DAO {
     public void remove(Object o) {
         if (o instanceof Ticket ticket) {
             try {
-                cs.statement.executeUpdate("delete from Tickets where Ticket_Id =" +
+                cs.getStatement().executeUpdate("delete from Tickets where Ticket_Id =" +
                         ticket.ticketId);
                 cs.closeCS();
             } catch (SQLException e) {
@@ -80,7 +81,7 @@ public class TicketDAO implements DAO {
     public void update(Object o) {
         if (o instanceof Ticket ticket) {
             try {
-                cs.statement.executeUpdate("update Tickets set Flight_Id=" + ticket.flightId + "," +
+                cs.getStatement().executeUpdate("update Tickets set Flight_Id=" + ticket.flightId + "," +
                         "Customer_Id=" + ticket.customerId + "where Ticket_Id =" + ticket.ticketId);
                 cs.closeCS();
             } catch (SQLException e) {
@@ -92,7 +93,7 @@ public class TicketDAO implements DAO {
     public List<Ticket> getTicketsByCustomer(long customer_id) {
         List<Ticket> get_tickets_by_customer = new ArrayList<>();
         try {
-            ResultSet result = cs.statement.executeQuery("select * from get_tickets_by_customer" + "(" + customer_id + ")");
+            ResultSet result = cs.getStatement().executeQuery("select * from get_tickets_by_customer" + "(" + customer_id + ")");
             while (result.next()) {
                 get_tickets_by_customer.add(new Ticket(result.getLong("Ticket_Id"),
                         result.getLong("Flight_Id"),
@@ -104,6 +105,7 @@ public class TicketDAO implements DAO {
         }
         return get_tickets_by_customer;
     }
+
 
 
 }

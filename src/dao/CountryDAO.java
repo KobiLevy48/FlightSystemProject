@@ -1,6 +1,7 @@
-package dao;
+package com.example.project.dao;
 
-import pojo.Country;
+import com.example.project.pojo.Country;
+
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,11 +18,11 @@ public class CountryDAO implements DAO {
 
     //Get country by id from DB.
     @Override
-    public Object get(int id) {
+    public Country get(int id) {
         Country country = null;
 
         try {
-            ResultSet result = cs.statement.executeQuery("select * from Countries where Country_Id =" + id);
+            ResultSet result = cs.getStatement().executeQuery("select * from Countries where Country_Id =" + id);
             result.next();
             country = new Country(result.getInt("Country_Id"),
                     result.getString("Country_Name"));
@@ -37,7 +38,7 @@ public class CountryDAO implements DAO {
     public List<Country> getAll() {
 
         try {
-            ResultSet result = cs.statement.executeQuery("select * from Countries");
+            ResultSet result = cs.getStatement().executeQuery("select * from Countries");
             while (result.next()) {
                 countryList.add(new Country(result.getInt("Country_Id"),
                         result.getString("Country_Name")));
@@ -55,7 +56,7 @@ public class CountryDAO implements DAO {
     public void add(Object o) {
         if (o instanceof Country country) {
             try {
-                cs.statement.executeUpdate("insert into Countries(Country_Name)" +
+                cs.getStatement().executeUpdate("insert into Countries(Country_Name)" +
                         "values" + "('" + country.countryName + "')");
                 cs.closeCS();
             } catch (SQLException e) {
@@ -68,7 +69,7 @@ public class CountryDAO implements DAO {
     public void remove(Object o) {
         if (o instanceof Country country) {
             try {
-                cs.statement.executeUpdate("delete from Countries where Country_Id =" +
+                cs.getStatement().executeUpdate("delete from Countries where Country_Id =" +
                         country.countryId);
                 cs.closeCS();
             } catch (SQLException e) {
@@ -81,7 +82,7 @@ public class CountryDAO implements DAO {
     public void update(Object o) {
         if (o instanceof Country country) {
             try {
-                cs.statement.executeUpdate("update Countries set Country_Name ='" +
+                cs.getStatement().executeUpdate("update Countries set Country_Name ='" +
                         country.countryName + "'where Country_Id = " + country.countryId);
                 cs.closeCS();
             } catch (SQLException e) {
